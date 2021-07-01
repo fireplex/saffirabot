@@ -12,19 +12,22 @@ exports.run = (client, interaction) => {
 		var db = admin.database();
 		
 		var ref = db.ref("restrictedRoles"); 
+		const options = interaction.options.find(option => option.name === "add");
+		const role = options.options.find(option => option.name === "role").role;
+		//console.log(options.options.role);
 		ref.once("value", function(snapshot) {
 			var json = JSON.parse(snapshot.val()).roles;
 			var jsonRoles = JSON.parse(snapshot.val()).roles;
-			var argRole = interaction.options[0].options[0].role.name;
+			var argRole = role.name;
 			for(var i=0; i<json.length; i++){
 				jsonRoles[i]=json[i]+"\\b";
 			}
 			//return console.log(interaction.member.roles.cache.some(r => r.name === "Hatchling"), `'${argRole}'`, argRole.match(/(Weeb Dergs)|(Gamer Dergs)|(Roleplay Dergs)/gi));
 			if(interaction.member.roles.cache.some(r => r.name === "Hatchling") == false) { //NOT A HATCHLING, PASS TO MANUAL CHECK
 				if(argRole.match(/(Weeb Dergs)|(Gamer Dergs)|(Roleplay Dergs)/gi)) { //User wants standard role
-					interaction.member.roles.add(interaction.options[0].options[0].role)
+					interaction.member.roles.add(role.name)
 					.then(function() {
-						if(interaction.member.roles.cache.get(interaction.options[0].options[0].role.id)) {
+						if(interaction.member.roles.cache.get(role.id)) {
 							interaction.reply(`Role **${argRole}** added successfully`).catch(console.error);
 						}
 					}).catch(function(error) {
@@ -36,9 +39,9 @@ exports.run = (client, interaction) => {
 					if (new RegExp(jsonRoles.join("|"),"i").test(argRole)) {
 						interaction.reply("You don't have permission to add this role").catch(console.error);
 					} else {
-						interaction.member.roles.add(interaction.options[0].options[0].role)
+						interaction.member.roles.add(role)
 						.then(function() {
-							if(interaction.member.roles.cache.get(interaction.options[0].options[0].role.id)) {
+							if(interaction.member.roles.cache.get(role.id)) {
 								interaction.reply(`Role **${argRole}** added successfully`).catch(console.error);
 							}
 						}).catch(function(error) {
@@ -52,9 +55,9 @@ exports.run = (client, interaction) => {
 				if (new RegExp(jsonRoles.join("|"),"i").test(argRole)) {
 					interaction.reply("You don't have permission to add this role").catch(console.error);
 				} else {
-					interaction.member.roles.add(interaction.options[0].options[0].role)
+					interaction.member.roles.add(role)
 					.then(function() {
-						if(interaction.member.roles.cache.get(interaction.options[0].options[0].role.id)) {
+						if(interaction.member.roles.cache.get(role.id)) {
 							interaction.reply(`Role **${argRole}** added successfully`).catch(console.error);
 						}
 					}).catch(function(error) {
@@ -69,7 +72,9 @@ exports.run = (client, interaction) => {
 	}
 
 	if(interaction.options.find(option => option.name === "remove")) {
-		interaction.member.roles.remove(interaction.options[0].options[0].role)
+		const options = interaction.options.find(option => option.name === "remove");
+		const role = options.options.find(option => option.name === "role").role;
+		interaction.member.roles.remove(role)
 			.then(interaction.reply("Role removed").catch(console.error)).catch(console.error);
 	}
 }
