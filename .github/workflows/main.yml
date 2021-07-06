@@ -24,15 +24,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
-      - name: Set up secret file
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: |
-          echo $SECRET_KEY >> secrets.txt
-
-      - name: Run tmate
-        uses: mxschmitt/action-tmate@v2
 
       # Runs a single command using the runners shell
       - name: ssh deploy
