@@ -8,6 +8,7 @@ exports.run = (client, interaction) => {
 	
 	var db = admin.database();
 	if(interaction.options.find(option => option.name === "add")) {
+		const options = interaction.options.find(option => option.name === "add");
 		function uniqueArray(arr) { //Remove duplicates
 			return arr.filter(function(item, index){
 				return arr.indexOf(item) >= index;
@@ -17,7 +18,7 @@ exports.run = (client, interaction) => {
 		var ref = db.ref("restrictedRoles"); 
 		ref.once("value", function(snapshot) {
 			var json = JSON.parse(snapshot.val());
-			var argsRoles = interaction.options[0].options[0].value.split(","); //Structure args into array and concat
+			var argsRoles = options.find(option => option.name === "roles").value.split(","); //Structure args into Array
 			argsRoles = argsRoles.concat(json.roles);
 			var roles = '{"roles":' + JSON.stringify(uniqueArray(argsRoles)) + "}";
 			db.ref('/').update({
@@ -36,10 +37,11 @@ exports.run = (client, interaction) => {
 	}
 
 	if(interaction.options.find(option => option.name === "remove")) {
+		const options = interaction.options.find(option => option.name === "remove");
 		ref.once("value", function(snapshot) {
 			var json = JSON.parse(snapshot.val());
 			var jsonRoles = json.roles;
-			var argsRoles = interaction.options[0].options[0].value.split(","); //Structure args into array
+			var argsRoles = options.find(option => option.name === "roles").value.split(","); //Structure args into Array
 			
 			roles = jsonRoles.filter(function (item) { //Filter out args roles from json roles
 					return argsRoles.indexOf(item) === -1;
@@ -61,6 +63,7 @@ exports.run = (client, interaction) => {
 	}
 
 	if(interaction.options.find(option => option.name === "view")) {
+		const options = interaction.options.find(option => option.name === "view");
 		var ref = db.ref("restrictedRoles"); 
 		ref.once("value", function(snapshot) {
 			var json = JSON.parse(snapshot.val());
