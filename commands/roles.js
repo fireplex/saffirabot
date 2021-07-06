@@ -3,7 +3,7 @@ exports.run = (client, interaction) => {
 		//Init firebase
 
 		var admin = require("firebase-admin");
-		var serviceAccount = require("./saffira-bot-firebase-adminsdk-s9opn-6c877e1f23.json");
+		var serviceAccount = require("./pk.json");
 		admin.initializeApp({
 			credential: admin.credential.cert(serviceAccount),
 			databaseURL: "https://saffira-bot-default-rtdb.europe-west1.firebasedatabase.app"

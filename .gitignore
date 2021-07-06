@@ -2,3 +2,5 @@
 **/node_modules
 **/commandsOLD
 **/data
+config.json
+**/pk.json

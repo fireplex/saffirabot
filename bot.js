@@ -7,6 +7,7 @@ const { MessageEmbed, Attachment, MessageCollector, MessageAttachment } = requir
 const fs = require("fs");
 const low = require("lowdb");
 const numWords = require("num-words");
+const config = require("./config.json");
 const client = new Discord.Client({ 
   partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
   intents: Discord.Intents.ALL,
@@ -48,4 +49,4 @@ fs.readdir("./commands/", (err, files) => {
   });
 });
 
-client.login("ODM5MDc5OTI1MTc5ODc1MzM5.YJEcEw.lGQrUaAodiGBimL7D9UuDs7KytQ");
+client.login(config.token);
