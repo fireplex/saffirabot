@@ -25,7 +25,7 @@ exports.run = (client, interaction) => {
 			//return console.log(interaction.member.roles.cache.some(r => r.name === "Hatchling"), `'${argRole}'`, argRole.match(/(Weeb Dergs)|(Gamer Dergs)|(Roleplay Dergs)/gi));
 			if(interaction.member.roles.cache.some(r => r.name === "Hatchling") == false) { //NOT A HATCHLING, PASS TO MANUAL CHECK
 				if(argRole.match(/(Weeb Dergs)|(Gamer Dergs)|(Roleplay Dergs)/gi)) { //User wants standard role
-					interaction.member.roles.add(role.name)
+					interaction.member.roles.add(role)
 					.then(function() {
 						if(interaction.member.roles.cache.get(role.id)) {
 							interaction.reply(`Role **${argRole}** added successfully`).catch(console.error);
