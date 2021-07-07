@@ -1,24 +1,13 @@
 exports.run = (client, interaction) => {
-  if(interaction.options[0].name === "add") {
+  if(interaction.options.find(option => option.name === "add")) {
+		const options = interaction.options.find(option => option.name === "add");
     const namedColors = require("color-name-list");
     const nearestColor = require("nearest-color");
 
-    var colorHex = null;
-    var user = null;
-
-    interaction.options[0].options.forEach(element => {
-      if (element.name === "hexcode") {
-        colorHex = element.value;
-      }
-      if (element.name === "user") {     
-        user = element.value;
-      }
-    });
+    var colorHex = options.options.find(option => option.name === "hexcode").value;
 
     client.guilds.fetch(interaction.guildID).then(guild => {
-      //guild.members.cache.find(user => user.id ===).then(member => {
 				var member = interaction.member;
-				//console.log(member.roles.cache);
         //If we can't assign a color, use nearestColor to find one and use that
         if(!namedColors.find(color => color.hex === colorHex)) {
           const colors = namedColors.reduce((o, { name, hex }) => Object.assign(o, { [name]: hex }), {});
@@ -27,7 +16,6 @@ exports.run = (client, interaction) => {
           var messageColor = {};
           messageColor.name = nearest(colorHex).name;
           messageColor.hex = nearest(colorHex).value;
-          //return console.log(messageColor.name);
         } else {
           var messageColor = namedColors.find(color => color.hex === colorHex.toLowerCase());
         }
@@ -71,7 +59,6 @@ exports.run = (client, interaction) => {
             }
           });
         }
-      //});
     });
   }
 }
