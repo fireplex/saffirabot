@@ -3,14 +3,14 @@ const Enmap = require("enmap");
 const express = require('express');
 const app = express();
 const Discord = require("discord.js");
-const { MessageEmbed, Attachment, MessageCollector, MessageAttachment } = require("discord.js");
+const { MessageEmbed, Attachment, MessageCollector, MessageAttachment, MessageActionRow, MessageButton, MessageSelectMenu } = require("discord.js");
 const fs = require("fs");
 const low = require("lowdb");
 const numWords = require("num-words");
 const config = require("./config.json");
 const client = new Discord.Client({ 
   partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
-  intents: Discord.Intents.ALL,
+  intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_BANS', 'GUILD_EMOJIS', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGE_REACTIONS', 'DIRECT_MESSAGE_TYPING'],
   fetchAllMembers: true
 });
 
@@ -20,6 +20,9 @@ client.embed = MessageEmbed;
 client.fs = fs;
 client.low = low;
 client.numWords = numWords;
+client.messageActionRow = MessageActionRow;
+client.messageButton = MessageButton;
+client.messageSelectMenu = MessageSelectMenu;
 
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");

@@ -46,6 +46,22 @@ exports.run = (client, message, args) => {
       ]
     },
 		{
+			name: "roleselect",
+			description: "Manage your roles with a select menu",
+			options: [
+				{
+					name: "add",
+					description: "Add a role",
+					type: 1
+				},
+				{
+					name: "remove",
+					description: "Remove a role",
+					type: 1
+				}
+			]
+		},
+		{
       name: "colorroles",
       description: "Assign a color role to your name",
       options: [
