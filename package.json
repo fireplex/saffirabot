@@ -15,6 +15,7 @@
     "dotenv": "^9.0.0",
     "enmap": "^5.8.5",
     "express": "^4.17.1",
+    "fa.js": "^0.2.8",
     "firebase-admin": "^9.8.0",
     "lowdb": "^1.0.0",
     "nearest-color": "^0.4.4",
