@@ -11,7 +11,7 @@
   "dependencies": {
     "color-name-list": "^8.13.0",
     "discord": "^0.8.2",
-    "discord.js": "^13.0.0-dev.98c6078.1626264203",
+    "discord.js": "github:discordjs/discord.js",
     "dotenv": "^9.0.2",
     "enmap": "^5.8.7",
     "express": "^4.17.1",

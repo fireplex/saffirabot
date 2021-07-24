@@ -4,3 +4,5 @@
 **/data
 config.json
 **/pk.json
+package-lock.json
+package.json

@@ -1,6 +1,10 @@
 exports.run = (client, interaction) => {
 	var selectinteraction = interaction;
-	if(interaction.options.find(option => option.name === "add")) {
+	console.log(interaction.options.getSubCommand());
+	if(interaction.options.getSubCommand() === "add") {
+		interaction.defer({ ephemeral: true })
+			.then(console.log)
+			.catch(console.error);
 		var selectinteraction = interaction;
 		var admin = require("firebase-admin");
 		var serviceAccount = require("./pk.json");
@@ -48,11 +52,15 @@ exports.run = (client, interaction) => {
 					);
 				}
 			}
-			interaction.reply({ content: 'Select roles to add:', ephemeral: true, components: rows });
+			interaction.editReply({ content: 'Select roles to add:', ephemeral: true, components: rows });
+			admin.app().delete();
 		});
 	}
 	
-	if(interaction.options.find(option => option.name === "remove")) {
+	if(interaction.options.getSubCommand() === "remove") {
+		interaction.defer({ ephemeral: true })
+			.then(console.log)
+			.catch(console.error);
 		var roles = interaction.member.roles.cache.map(role => role.name).sort();
 		var selectinteraction = interaction;
 		var rows = [];
@@ -78,7 +86,8 @@ exports.run = (client, interaction) => {
 					.addOptions(options.slice(i*maxLen,i*maxLen+maxLen)),
 				);
 			} 
-		interaction.reply({ content: 'Select roles to remove:', ephemeral: true, components: rows });
+		interaction.editReply({ content: 'Select roles to remove:', ephemeral: true, components: rows });
+		admin.app().delete();
 	}
 	
 		client.on('interactionCreate', interaction => {
