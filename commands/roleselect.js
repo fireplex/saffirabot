@@ -25,34 +25,28 @@ exports.run = (client, interaction) => {
 			
 			//We need to craft the options for the select menu before it's created.
 			//First check if the user is under 18, to further define roles to display
-			if(!interaction.member.roles.cache.some(r => r.name === "18+")) {
-				console.log("User is under 18");
+			var options = [];
+			roles.forEach(element => { //Setup options for our selects
+				options.push({label: element, value: element});
+			});	
 				
-			} else {
-				console.log("User is over 18");
-				var options = [];
-				roles.forEach(element => { //Setup options for our selects
-					options.push({label: element, value: element});
-				});	
-				
-				var maxLen = 25;
-				if(options.length > maxLen) {
-					var menus = options.length/maxLen;
+			var maxLen = 25;
+			if(options.length > maxLen) {
+				var menus = options.length/maxLen;
 					
-					for (var i = 0; i < menus; i++) { //Here we break up our selects into seperate 25 max due to hard limits
-						let indexLen = options.slice(i*maxLen,i*maxLen+maxLen).length;
-						let firstIndexChar = options.slice(i*maxLen,i*maxLen+maxLen)[0]["value"].charAt(0); 
-						let lastIndexChar = options.slice(i*maxLen,i*maxLen+maxLen)[indexLen-1]["value"].charAt(0);
-						rows[i] = new client.messageActionRow().addComponents(
-						new client.messageSelectMenu()
-							.setCustomId(`roleadd`)
-							.setMinValues(1)
-							.setMaxValues(options.slice(i*maxLen,i*maxLen+maxLen).length)
-							.setPlaceholder(`${firstIndexChar}-${lastIndexChar}`)
-							.addOptions(options.slice(i*maxLen,i*maxLen+maxLen)),
-						);
-					}
-				} 
+				for (var i = 0; i < menus; i++) { //Here we break up our selects into seperate 25 max due to hard limits
+					let indexLen = options.slice(i*maxLen,i*maxLen+maxLen).length;
+					let firstIndexChar = options.slice(i*maxLen,i*maxLen+maxLen)[0]["value"].charAt(0); 
+					let lastIndexChar = options.slice(i*maxLen,i*maxLen+maxLen)[indexLen-1]["value"].charAt(0);
+					rows[i] = new client.messageActionRow().addComponents(
+					new client.messageSelectMenu()
+						.setCustomId(`roleadd`)
+						.setMinValues(1)
+						.setMaxValues(options.slice(i*maxLen,i*maxLen+maxLen).length)
+						.setPlaceholder(`${firstIndexChar}-${lastIndexChar}`)
+						.addOptions(options.slice(i*maxLen,i*maxLen+maxLen)),
+					);
+				}
 			}
 			interaction.reply({ content: 'Select roles to add:', ephemeral: true, components: rows });
 		});
