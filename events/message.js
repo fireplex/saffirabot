@@ -8,17 +8,18 @@ module.exports = (client, message) => {
 		var subID = message.content.split("www.furaffinity.net/view/")[1];
 		var subURL = message.content;
 		subID = subID.slice(0, -1); 
-		message.delete();
 
 		fa.getSubmission(subID).then((sub) => {
-		    console.log(sub);
-		    const embed = new client.embed();
-		    embed.setAuthor(sub.artist, sub.artist_thumb);
-		    embed.setImage(sub.url);
-		    embed.setTitle(sub.title);
-		    embed.setURL(subURL);
-		    embed.setFooter(`Created ${sub.when} | ${sub.when_title}`);
-		    message.channel.send({ content: '** **', embeds: [embed] });
+			if(sub.url != "" && sub.title != "") {
+				message.delete();
+				const embed = new client.embed();
+				embed.setAuthor(sub.artist, sub.artist_thumb);
+				embed.setImage(sub.url);
+				embed.setTitle(sub.title);
+				embed.setURL(subURL);
+				embed.setFooter(`Created ${sub.when} | ${sub.when_title}`);
+				message.channel.send({ content: '** **', embeds: [embed] });
+			}
 		});
 	}
 
