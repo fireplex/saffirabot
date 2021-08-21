@@ -1,8 +1,8 @@
 exports.run = (client, interaction) => {
 	var selectinteraction = interaction;
-	console.log(interaction.options.getSubCommand());
-	if(interaction.options.getSubCommand() === "add") {
-		interaction.defer({ ephemeral: true }).then(() => {
+	console.log(interaction.options.getSubcommand());
+	if(interaction.options.getSubcommand() === "add") {
+		interaction.deferReply({ ephemeral: true }).then(() => {
 		var selectinteraction = interaction;
 		var admin = require("firebase-admin");
 		var serviceAccount = require("./pk.json");
@@ -42,7 +42,7 @@ exports.run = (client, interaction) => {
 					let lastIndexChar = options.slice(i*maxLen,i*maxLen+maxLen)[indexLen-1]["value"].charAt(0);
 					rows[i] = new client.messageActionRow().addComponents(
 					new client.messageSelectMenu()
-						.setCustomId(`roleadd`)
+						.setCustomId(`roleadd${i}`)
 						.setMinValues(1)
 						.setMaxValues(options.slice(i*maxLen,i*maxLen+maxLen).length)
 						.setPlaceholder(`${firstIndexChar}-${lastIndexChar}`)
@@ -56,8 +56,8 @@ exports.run = (client, interaction) => {
 		});
 	}
 	
-	if(interaction.options.getSubCommand() === "remove") {
-		interaction.defer({ ephemeral: true }).then(() => {
+	if(interaction.options.getSubcommand() === "remove") {
+		interaction.deferReply({ ephemeral: true }).then(() => {
 		var roles = interaction.member.roles.cache.map(role => role.name).sort();
 		var selectinteraction = interaction;
 		var rows = [];
@@ -76,7 +76,7 @@ exports.run = (client, interaction) => {
 				let lastIndexChar = options.slice(i*maxLen,i*maxLen+maxLen)[indexLen-1]["value"].charAt(0);
 				rows[i] = new client.messageActionRow().addComponents(
 				new client.messageSelectMenu()
-					.setCustomId(`roleremove`)
+					.setCustomId(`roleremove${i}`)
 					.setMinValues(1)
 					.setMaxValues(options.slice(i*maxLen,i*maxLen+maxLen).length)
 					.setPlaceholder(`${firstIndexChar}-${lastIndexChar}`)
@@ -89,14 +89,15 @@ exports.run = (client, interaction) => {
 	
 		client.on('interactionCreate', interaction => {
 			if (!interaction.isSelectMenu()) return;
-			if (interaction.customId === "roleadd") {
+			console.log("createdInt");
+			if (interaction.customId.includes("roleadd")) {
 				var newRoles = [];
 				interaction.values.forEach(element => { //Create an array of roles from the selected found in the guild
 					newRoles.push(interaction.guild.roles.cache.find(r => r.name === element));
 				});
 				interaction.member.roles.add(newRoles).then(interaction.reply(({ content: 'New roles added!', ephemeral: true} )));
 			}
-			if (interaction.customId === "roleremove") {
+			if (interaction.customId.includes("roleremove")) {
 				var newRoles = [];
 				interaction.values.forEach(element => { //Create an array of roles from the selected found in the guild
 					newRoles.push(interaction.guild.roles.cache.find(r => r.name === element));

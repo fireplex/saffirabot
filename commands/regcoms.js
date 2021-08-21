@@ -1,6 +1,6 @@
 exports.run = (client, message, args) => {
 	const commandData = [
-		{
+		/*{
 			name: "roles",
 			description: "Manage your roles",
 			options: [
@@ -31,7 +31,7 @@ exports.run = (client, message, args) => {
 					]
 				}
 			]
-		},
+		},*/
 		{
       name: "bulkdelete",
       description: "Delete bulk messages in order of date (max 100)",
