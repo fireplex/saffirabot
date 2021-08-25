@@ -5,18 +5,43 @@ module.exports = (client, message) => {
 		var urlRegex = /(https?:\/\/[^ ]*)/;
 		var url = message.content.match(urlRegex)[1];
 		const puppeteer = require('puppeteer');
+		const fs = require('fs');
 
 		(async () => {
-			const browser = await puppeteer.launch({
-				executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-				headless: true,
-				ignoreDefaultArgs: ['--disable-extensions'],
-				args: [
-				'--user-data-dir=C:\\Users\\Feeka\\AppData\\Local\\Google\\Chrome\\User Data'
-				],
-			});
+			const browser = await puppeteer.launch();
 			const page = await browser.newPage();
+
 			await page.goto(url);
+
+			function findNested(x) {
+				return cookiesSet.find(item => item.name === x)
+			}
+			const cookiesSet = await page.cookies();
+
+			if(typeof findNested("a") != "undefined" && typeof findNested("b") != "undefined") {
+				const newCookies = [
+					{
+						name: findNested("a").name,
+						value: findNested("a").value,
+						domain: findNested("a").domain,
+					},
+					{
+						name: findNested("b").name,
+						value: findNested("b").value,
+						domain: findNested("b").domain,
+					}
+				];
+				fs.writeFile('cookies.json', JSON.stringify(newCookies), function (err) {
+					if (err) return console.log(err);
+					console.log("Cookie ses wrote");
+				});
+			}
+
+			let rawdata = fs.readFileSync('cookies.json');
+			let cookies = JSON.parse(rawdata);
+			await page.setCookie(cookies[0], cookies[1]);
+
+			await page.reload();
 	
 			var sub = await page.evaluate(() => {
 				var views = document.getElementsByClassName("views")[0].getElementsByTagName('span')[0].innerText.toString();
