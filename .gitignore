@@ -6,3 +6,6 @@ config.json
 **/pk.json
 package-lock.json
 package.json
+cookies.json
+
+commands/scrape.js

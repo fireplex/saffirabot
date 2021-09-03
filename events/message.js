@@ -4,6 +4,12 @@ module.exports = (client, message) => {
 		console.log("FA link");
 		var urlRegex = /(https?:\/\/[^ ]*)/;
 		var url = message.content.match(urlRegex)[1];
+		var messageContents = message.content.replace(url, '');
+
+		if (messageContents === '') {
+			messageContents = '** **';
+		}
+		//return console.log("contents: '" + messageContents + "'");
 		const puppeteer = require('puppeteer');
 		const fs = require('fs');
 
@@ -62,9 +68,10 @@ module.exports = (client, message) => {
 			embed.setAuthor(sub.author, sub.avatar);
 			embed.setImage(sub.url);
 			embed.setTitle(sub.title);
-			embed.setURL(sub.url);
+			embed.setURL(url);
 			embed.setFooter(`Views: ${sub.views} | Favs: ${sub.favs} | Comments: ${sub.comments} || Created ${sub.date}`);
-			message.channel.send({ content: '** **', embeds: [embed] });
+
+			message.channel.send({ content: messageContents, embeds: [embed] });
 
 			await browser.close();
 		})();
