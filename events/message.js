@@ -2,14 +2,9 @@ module.exports = (client, message) => {
 
 	if (message.content.includes("furaffinity.net/view/")) {
 		console.log("FA link");
+		message.suppressEmbeds(true);
 		var urlRegex = /(https?:\/\/[^ ]*)/;
 		var url = message.content.match(urlRegex)[1];
-		var messageContents = message.content.replace(url, '');
-
-		if (messageContents === '') {
-			messageContents = '** **';
-		}
-		//return console.log("contents: '" + messageContents + "'");
 		const puppeteer = require('puppeteer');
 		const fs = require('fs');
 
@@ -62,8 +57,6 @@ module.exports = (client, message) => {
 	
 				return subCont;
 			});
-			message.delete();
-
 			const embed = new client.embed();
 			embed.setAuthor(sub.author, sub.avatar);
 			embed.setImage(sub.url);
@@ -71,7 +64,7 @@ module.exports = (client, message) => {
 			embed.setURL(url);
 			embed.setFooter(`Views: ${sub.views} | Favs: ${sub.favs} | Comments: ${sub.comments} || Created ${sub.date}`);
 
-			message.channel.send({ content: messageContents, embeds: [embed] });
+			message.channel.send({ content: '** **', embeds: [embed] });
 
 			await browser.close();
 		})();
