@@ -6,16 +6,8 @@ config.json
 **/pk.json
 package-lock.json
 package.json
-<<<<<<< Updated upstream
 cookies.json
-
 commands/scrape.js
-=======
-<<<<<<< HEAD
 **/.vs
-=======
 cookies.json
-
 commands/scrape.js
->>>>>>> master
->>>>>>> Stashed changes
