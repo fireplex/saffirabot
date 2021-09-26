@@ -9,6 +9,7 @@
   "author": "feeka",
   "license": "ISC",
   "dependencies": {
+    "@pm2/io": "^5.0.0",
     "@types/node": "^16.9.4",
     "color-name-list": "^8.13.0",
     "cross-spawn": "^7.0.3",
