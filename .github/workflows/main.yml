@@ -1,0 +1,47 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: ssh deploy
+        uses: easingthemes/ssh-deploy@v2.2.11
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+          REMOTE_HOST: server.ldcave.org
+          REMOTE_USER: feeka
+          REMOTE_PORT: 55522
+          TARGET: /home/feeka/saffirabot
+          
+      - name: pm2 restart
+        uses: appleboy/ssh-action@master
+        with:
+          host: "server.ldcave.org"
+          username: "feeka"
+          key: ${{ secrets.SECRET_KEY }}
+          port: 55522
+          script_stop: true
+          script: |
+            cd /home/feeka/saffirabot
+            pm2 restart
