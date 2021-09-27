@@ -36,13 +36,16 @@ jobs:
           
       - name: pm2 restart
         uses: appleboy/ssh-action@master
+        env:
+          PASS: ${{ secrets.PASS }}
         with:
           host: "server.ldcave.org"
           username: "feeka"
           key: ${{ secrets.ACTION_KEY }}
           port: 55522
           script_stop: true
+          envs: PASS
           script: |
             cd /home/feeka/saffirabot
             sudo pm2 restart Saffirabot
-            echo ${{ secrets.PASS }}
+            echo ${{ $PASS }}
