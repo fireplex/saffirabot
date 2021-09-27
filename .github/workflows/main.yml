@@ -39,7 +39,7 @@ jobs:
         with:
           host: "server.ldcave.org"
           username: "feeka"
-          key: ${{ secrets.SECRET_KEY }}
+          key: ${{ secrets.ACTION_KEY }}
           port: 55522
           script_stop: true
           script: |
