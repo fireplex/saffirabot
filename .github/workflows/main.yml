@@ -24,6 +24,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+            
+      - name: ssh deploy
+        uses: easingthemes/ssh-deploy@v2.2.11
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SECRET_KEY }}
+          REMOTE_HOST: server.ldcave.org
+          REMOTE_USER: feeka
+          REMOTE_PORT: 55522
+          TARGET: /home/feeka/saffirabot
           
       - name: pm2 restart
         uses: appleboy/ssh-action@master
@@ -35,5 +44,4 @@ jobs:
           script_stop: true
           script: |
             cd /home/feeka/saffirabot
-            git pull
             pm2 restart
