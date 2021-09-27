@@ -48,4 +48,4 @@ jobs:
           script: |
             cd /home/feeka/saffirabot
             sudo pm2 restart Saffirabot
-            echo ${{ $PASS }}
+            echo "$PASS"
