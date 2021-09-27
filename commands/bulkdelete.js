@@ -1,11 +1,7 @@
 exports.run = (client, interaction) => {
-  interaction.options.forEach(option => {
-    if(option.name === "amount") {
-      client.channels.fetch(interaction.channelID).then(channel => {
-        channel.bulkDelete(option.value).then(messages => {
-          interaction.reply( `Bulk deleted ${messages.size} messages`).catch(console.error);
-        });
-      });
-    }
-   });
+  client.channels.fetch(interaction.channelId).then(channel => {
+    channel.bulkDelete(interaction.options.getInteger("amount")).then(messages => {
+      interaction.reply( `Bulk deleted ${messages.size} messages`).catch(console.error);
+    });
+  });
 }

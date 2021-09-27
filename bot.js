@@ -61,6 +61,6 @@ client.once("ready", () => {
   game = new Game(client, config);
 })
 
-client.on("message", (message) => {
+client.on("messageCreate", (message) => {
   game.onMessage(message);
 })
