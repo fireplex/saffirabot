@@ -44,4 +44,4 @@ jobs:
           script_stop: true
           script: |
             cd /home/feeka/saffirabot
-            pm2 restart
+            sudo pm2 restart Saffirabot
