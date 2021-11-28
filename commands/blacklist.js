@@ -8,7 +8,7 @@ exports.run = (client, interaction) => {
 	
 	var db = admin.database();
 	if(interaction.options.getSubcommand() === "add") {
-		interaction.defer().then(() => {
+		interaction.deferReply().then(() => {
 			function uniqueArray(arr) { //Remove duplicates
 				return arr.filter(function(item, index){
 					return arr.indexOf(item) >= index;
@@ -38,7 +38,7 @@ exports.run = (client, interaction) => {
 	}
 
 	if(interaction.options.getSubcommand() === "remove") {
-		interaction.defer().then(() => {
+		interaction.deferReply().then(() => {
 			var ref = db.ref("restrictedRoles"); 
 			ref.once("value", function(snapshot) {
 				var json = JSON.parse(snapshot.val());
@@ -66,7 +66,7 @@ exports.run = (client, interaction) => {
 	}
 
 	if(interaction.options.getSubcommand() === "view") {
-		interaction.defer().then(() => {
+		interaction.deferReply().then(() => {
 			var ref = db.ref("restrictedRoles"); 
 			ref.once("value", function(snapshot) {
 				var json = JSON.parse(snapshot.val());
