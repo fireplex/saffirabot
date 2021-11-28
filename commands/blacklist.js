@@ -2,13 +2,13 @@ exports.run = (client, interaction) => {
 	var admin = require("firebase-admin");
 	var serviceAccount = require("./pk.json");
 	
-	var db = admin.database();
 	if(interaction.options.getSubcommand() === "add") {
 		interaction.deferReply().then(() => {
 			admin.initializeApp({
 				credential: admin.credential.cert(serviceAccount),
 				databaseURL: "https://saffira-bot-default-rtdb.europe-west1.firebasedatabase.app"
 			});
+			var db = admin.database();
 			function uniqueArray(arr) { //Remove duplicates
 				return arr.filter(function(item, index){
 					return arr.indexOf(item) >= index;
@@ -43,6 +43,7 @@ exports.run = (client, interaction) => {
 				credential: admin.credential.cert(serviceAccount),
 				databaseURL: "https://saffira-bot-default-rtdb.europe-west1.firebasedatabase.app"
 			});
+			var db = admin.database();
 			var ref = db.ref("restrictedRoles"); 
 			ref.once("value", function(snapshot) {
 				var json = JSON.parse(snapshot.val());
@@ -75,6 +76,7 @@ exports.run = (client, interaction) => {
 				credential: admin.credential.cert(serviceAccount),
 				databaseURL: "https://saffira-bot-default-rtdb.europe-west1.firebasedatabase.app"
 			});
+			var db = admin.database();
 			var ref = db.ref("restrictedRoles"); 
 			ref.once("value", function(snapshot) {
 				var json = JSON.parse(snapshot.val());
