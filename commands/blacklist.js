@@ -7,7 +7,7 @@ exports.run = (client, interaction) => {
 	});
 	
 	var db = admin.database();
-	if(interaction.options.getSubCommand() === "add") {
+	if(interaction.options.getSubcommand() === "add") {
 		interaction.defer().then(() => {
 			function uniqueArray(arr) { //Remove duplicates
 				return arr.filter(function(item, index){
@@ -37,7 +37,7 @@ exports.run = (client, interaction) => {
 		});
 	}
 
-	if(interaction.options.getSubCommand() === "remove") {
+	if(interaction.options.getSubcommand() === "remove") {
 		interaction.defer().then(() => {
 			var ref = db.ref("restrictedRoles"); 
 			ref.once("value", function(snapshot) {
@@ -65,7 +65,7 @@ exports.run = (client, interaction) => {
 		});
 	}
 
-	if(interaction.options.getSubCommand() === "view") {
+	if(interaction.options.getSubcommand() === "view") {
 		interaction.defer().then(() => {
 			var ref = db.ref("restrictedRoles"); 
 			ref.once("value", function(snapshot) {
