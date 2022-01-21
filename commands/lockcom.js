@@ -1,5 +1,8 @@
-exports.run = (client, message, args) => {
-	message.guild.commands.setPermissions(args[0], [{
+exports.run = async (client, message, args) => {
+	const command = await message.guild.commands.fetch(args[0]);
+
+	const permissions = [
+		{
 			id: '809366915675324466', //Danneth
 			type: 'ROLE',
 			permission: true,
@@ -19,5 +22,7 @@ exports.run = (client, message, args) => {
 			type: 'USER',
 			permission: true,
 		}
-	]).then(message.channel.send("Com unlocked")).catch(console.error);
+	];
+
+	await command.permissions.add({ permissions });
 }
