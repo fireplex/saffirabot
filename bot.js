@@ -32,6 +32,13 @@ app.get("/", (request, response) => {
 });
 app.listen(process.env.PORT);
 
+const server = app.listen(3000, () => console.log('Server ready'));
+process.on('SIGTERM', () => {
+  server.close(() => {
+    console.log('Process terminated');
+  })
+})
+
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
